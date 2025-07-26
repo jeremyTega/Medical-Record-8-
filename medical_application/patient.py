@@ -103,7 +103,7 @@ class Patient:
     def request_appointment(self,reason,date,time):
         validate_str_input(reason)
         validate_str_input(date)
-        appointment = Appointment(reason,date,time)
+        clinic.book_appointment(reason,date,time)
     def add_appointment(self,appointment):
         self.appointments.append(appointment)
 
