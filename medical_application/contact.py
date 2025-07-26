@@ -1,4 +1,4 @@
-from address import Address
+from medical_application.address import Address
 
 class Contact:
     def __init__(self, name: str, phone_no: str, email: str, address: Address):
@@ -40,3 +40,20 @@ class Contact:
         if not isinstance(value, Address):
             raise ValueError("address must be an instance of Address")
         self._address = value
+
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "phone_no": self.phone_no,
+            "email": self.email,
+            "address": self.address.to_dict()
+        }
+
+    @staticmethod
+    def from_dict(data: dict):
+        return Contact(
+            name=data.get("name", ""),
+            phone_no=data.get("phone_no", ""),
+            email=data.get("email", ""),
+            address=Address.from_dict(data.get("address", {}))
+        )

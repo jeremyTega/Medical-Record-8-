@@ -33,3 +33,20 @@ class Address:
     def state(self, value):
         self._state = value
 
+    def to_dict(self):
+        return {
+            "house_no": self.house_no,
+            "street": self.street,
+            "city": self.city,
+            "state": self.state
+        }
+
+    @staticmethod
+    def from_dict(data: dict):
+        return Address(
+            house_no=data.get("house_no", ""),
+            street=data.get("street", ""),
+            city=data.get("city", ""),
+            state=data.get("state", "")
+        )
+
