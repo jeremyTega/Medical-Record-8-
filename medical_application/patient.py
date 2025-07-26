@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime,date
 
 from medical_application.address import Address
 from medical_application.dummy_appointment import Appointment
@@ -15,8 +15,18 @@ def validate_str_input(string:str):
         raise ValueError(f'{string} cannot be empty')
 def validate_gender(gender:str):
     validate_str_input(gender)
-    if gender is not "male" and gender is not "female":
+    if gender != "male" and gender != "female":
         raise ValueError(f'{gender} must be "male" or "female"')
+
+
+def set_date_of_birth(dob):
+    try:
+        dob_date = datetime.strptime(dob, "%d/%m/%Y").date()
+    except ValueError:
+        raise ValueError(f"{dob} is not in the correct format DD/MM/YYYY")
+
+    if dob_date > date.today():
+        raise ValueError(f"{dob} cannot be in the future")
 
 
 class Patient:
@@ -28,7 +38,8 @@ class Patient:
         self.password = None
         self.contact = None
         self.address = None
-        self.dob = datetime.datetime.strptime(dob, "%d/%m/%Y")
+        set_date_of_birth(dob)
+        self.dob = dob
         self.counter = 100
         self.patient_id = None
         self.medical_record = MedicalHistory()
@@ -46,11 +57,6 @@ class Patient:
     def get_appointments(self):
         return self.appointments
 
-    def set_date_of_birth(self,date_of_birth):
-        if type(date_of_birth) is not datetime.date:
-            raise ValueError(f'{date_of_birth} must be a date')
-        self.dob = datetime.datetime.strptime(date_of_birth, "%d/%m/%Y")
-
     def get_date_of_birth(self):
         return self.dob
 
@@ -66,11 +72,10 @@ class Patient:
     def get_address(self):
         return self.address
 
-    def set_contact(self,name,phone,email,address:Address):
-        validate_str_input(name)
+    def create_contact(self,phone,email,address:Address):
         validate_str_input(phone)
         validate_str_input(email)
-        self.contact = Contact(name, phone, email, address)
+        self.contact = Contact(self.name, phone, email, address)
 
     def get_contact(self):
         return self.contact
@@ -87,11 +92,18 @@ class Patient:
     def get_password(self):
         return self.password
 
+    def log_in(self,email,password):
+        if email != self.get_contact().email:
+            raise ValueError(f'{email} does not match your email')
+        if password != self.get_password():
+            raise ValueError("Incorrect password")
+        self.is_logged_in = True
+
+
     def request_appointment(self,reason,date,time):
         validate_str_input(reason)
         validate_str_input(date)
         appointment = Appointment(reason,date,time)
-
     def add_appointment(self,appointment):
         self.appointments.append(appointment)
 
