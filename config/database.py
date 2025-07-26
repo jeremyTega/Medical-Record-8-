@@ -12,5 +12,4 @@ def get_database():
         "patients": db["patients"],
         "records": db["records"]
     }
-
     return collections
