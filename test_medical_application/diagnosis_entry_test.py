@@ -10,9 +10,6 @@ class MyTestCase(unittest.TestCase):
                                     'Medication: malaria meds\n'
                                     'Date: 25/07/2025',entry.__str__())
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 9069e7be3179d1340cd27a7f21c16d38359e78ff
 if __name__ == '__main__':
     unittest.main()
