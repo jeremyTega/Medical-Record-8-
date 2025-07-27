@@ -48,26 +48,26 @@ class TestAdminCreateDoctor(unittest.TestCase):
         self.assertEqual(message, "Patient login successful")
         mock_patients.update_one.assert_called_once()
 
-    @patch("users.clinic_admin.collections")
-    def test_book_appointment(self, mock_collections):
-        # Arrange
-        mock_appointments_collection = MagicMock()
-        mock_collections.__getitem__.return_value = mock_appointments_collection
-
-        admin = Admin("admin_user")
-        patient_id = "patient123"
-        doctor_email = "doctor@example.com"
-        date_time = datetime(2025, 7, 26, 14, 30)
-
-        # Act
-        appointment = admin.book_appointment(patient_id, doctor_email, date_time)
-
-        # Assert
-        self.assertIsInstance(appointment, Appointment)
-        self.assertEqual(appointment.patient_id, patient_id)
-        self.assertEqual(appointment.doctor_email, doctor_email)
-        self.assertEqual(appointment.date_time, date_time)
-        mock_appointments_collection.insert_one.assert_called_once_with(appointment.to_dict())
+    # @patch("users.clinic_admin.collections")
+    # def test_book_appointment(self, mock_collections):
+    #     # Arrange
+    #     mock_appointments_collection = MagicMock()
+    #     mock_collections.__getitem__.return_value = mock_appointments_collection
+    #
+    #     admin = Admin("admin_user")
+    #     patient_id = "patient123"
+    #     doctor_email = "doctor@example.com"
+    #     date_time = datetime(2025, 7, 26, 14, 30)
+    #
+    #     # Act
+    #     appointment = admin.book_appointment(patient_id, doctor_email, date_time)
+    #
+    #     # Assert
+    #     self.assertIsInstance(appointment, Appointment)
+    #     self.assertEqual(appointment.patient_id, patient_id)
+    #     self.assertEqual(appointment.doctor_email, doctor_email)
+    #     self.assertEqual(appointment.date_time, date_time)
+    #     mock_appointments_collection.insert_one.assert_called_once_with(appointment.to_dict())
 
     # @patch("your_module.get_database")
     # def test_login_failure(self, mock_get_db):

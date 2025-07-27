@@ -43,23 +43,22 @@ class Doctor:
             "password": self.password,
             "specialisation": self.specialisation,
             "_is_logged_in": self._is_logged_in,
-                 "role": self.role,
-                    "contact": {
-                      "name": self.contact.name,
-                      "phone_no": self.contact.phone_no,
-            "email": self.contact.email,
-            "address": {
-                "house_no": self.contact.address.house_no,
-                "street": self.contact.address.street,
-                "city": self.contact.address.city,
-                "state": self.contact.address.state
+            "role": self.role,
+            "contact": {
+                "name": self.contact.name,
+                "phone_no": self.contact.phone_no,
+                "email": self.contact.email,
+                "address": {
+                    "house_no": self.contact.address.house_no,
+                    "street": self.contact.address.street,
+                    "city": self.contact.address.city,
+                    "state": self.contact.address.state
+                }
             }
         }
-        }
 
 
-
-   def get_appointments(self):
+def get_appointments(self):
        return list(appointment_collection.find({"doctors.email": self.contact.email}))
 
 
