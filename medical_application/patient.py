@@ -34,6 +34,7 @@ class Patient:
         self.medical_record = MedicalHistory()
         self.appointments: list[Appointment] = []
         self.is_logged_in = False
+        self.role = "patient"
 
     def generate_patient_id(self):
         self.patient_id = "P" + str(self.counter + 1)
@@ -103,6 +104,7 @@ class Patient:
          "Date of Birth": self.get_date_of_birth(),
         "password": self.get_password(),
         "_is_logged_in": self.is_logged(),
+         "role": self.role,
         "contact": {
             "name": self.get_contact().name,
             "gender": self.gender,

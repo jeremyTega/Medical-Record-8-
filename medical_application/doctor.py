@@ -1,7 +1,9 @@
-from config.database import doctors_collection
+
 from medical_application.appointment import Appointment
 from medical_application.contact import Contact
-from config.database import doctors_collection
+from config.database import get_database
+collections = get_database()
+doctors_collection = collections["doctors"]
 
 
 
@@ -13,15 +15,26 @@ class Doctor:
         self.contact = contact
         self.appointment: 'Appointment' = None
         self._is_logged_in = False
+        self.role = "doctor"
 
     @property
     def is_logged_in(self):
         return self._is_logged_in
 
+
+
     @is_logged_in.setter
     def is_logged_in(self, value):
         self._is_logged_in = value
+        doctors_collection.update_one(
+            {"contact.email": self.contact.email},
+            {"$set": {"_is_logged_in": value}}
+        )
 
+
+    @property
+    def role(self):
+        return self.role.lower()
 
     def to_dict(self):
      return {
@@ -29,6 +42,7 @@ class Doctor:
         "password": self.password,
         "specialisation": self.specialisation,
         "_is_logged_in": self._is_logged_in,
+         "role": self.role,
         "contact": {
             "name": self.contact.name,
             "phone_no": self.contact.phone_no,

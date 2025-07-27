@@ -1,6 +1,7 @@
 from config.database import get_database
 collections = get_database()
 doctors_collection = collections["doctors"]
+patients_collection = collections["patients"]
 from medical_application.doctor import Doctor
 from validators.auth_validator import validate_non_empty, validate_email_format
 
@@ -31,3 +32,26 @@ class Admin:
     #     validate_non_empty("Name", name)
     #     result = patients_collection.find_one({"Name": name})
     #     return result
+
+    def login_user(self, email: str, password: str):
+
+        doctor_data = doctors_collection.find_one({"contact.email": email, "password": password})
+        if doctor_data:
+            doctors_collection.update_one(
+                {"contact.email": email},
+                {"$set": {"_is_logged_in": True}}
+            )
+            return "Doctor login successful"
+
+
+        patient_data = patients_collection.find_one({"contact.email": email, "password": password})
+        if patient_data:
+            patients_collection.update_one(
+                {"contact.email": email},
+                {"$set": {"_is_logged_in": True}}
+            )
+            return "Patient login successful"
+
+        raise ValueError("Invalid email or password")
+
+
