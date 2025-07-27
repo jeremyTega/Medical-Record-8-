@@ -1,9 +1,11 @@
 from datetime import datetime,date
 
+from config.database import get_database
 from medical_application.address import Address
 from medical_application.dummy_appointment import Appointment
 from medical_application.contact import Contact
 from medical_application.medical_history import MedicalHistory
+collections = get_database()
 
 
 def validate_str_input(string:str):
@@ -100,10 +102,12 @@ class Patient:
         self.is_logged_in = True
 
 
-    def request_appointment(self,reason,date,time):
-        validate_str_input(reason)
-        validate_str_input(date)
-        clinic.book_appointment(reason,date,time)
+    def request_appointment(self,patient_email, doctor_email, reason):
+        #validate_str_input(reason)
+        appointment = Appointment(patient_email,doctor_email,reason)
+        collections["request Appointment"].insert_one(appointment.to_dict())
+        return appointment
+
     def add_appointment(self,appointment):
         self.appointments.append(appointment)
 

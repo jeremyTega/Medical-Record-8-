@@ -1,4 +1,5 @@
-from config.database import get_database
+from config.database import get_database, patient_collection
+
 collections = get_database()
 doctors_collection = collections["doctors"]
 from medical_application.doctor import Doctor
@@ -19,6 +20,9 @@ class Admin:
         doctor = Doctor(name,password,specialisation,my_Contact)
         result = doctors_collection.insert_one(doctor.to_dict())
         return doctor
+
+    def book_appointment(self,reason,patient_email):
+        patient = patient_collection().find_one({"_id":patient_email})
 
     # def create_patient(self, name,age,gender):
     #     validate_non_empty("Name", name)
