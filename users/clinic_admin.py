@@ -1,7 +1,10 @@
 from config.database import get_database
+from medical_application.appointment import Appointment
+
 collections = get_database()
 doctors_collection = collections["doctors"]
 patients_collection = collections["patients"]
+
 from medical_application.doctor import Doctor
 from validators.auth_validator import validate_non_empty, validate_email_format
 
@@ -53,5 +56,10 @@ class Admin:
             return "Patient login successful"
 
         raise ValueError("Invalid email or password")
+
+    def book_appointment(self, patient_id:str, doctor_email:str, date_time=None):
+        appointment = Appointment(patient_id, doctor_email, date_time)
+        collections["appointments"].insert_one(appointment.to_dict())
+        return appointment
 
 

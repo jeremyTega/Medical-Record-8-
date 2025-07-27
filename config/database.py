@@ -10,6 +10,7 @@ def get_database():
     collections = {
         "doctors": db["doctors"],
         "patients": db["patients"],
-        "records": db["records"]
+        "records": db["records"],
+        "appointments": db["appointments"]
     }
     return collections
