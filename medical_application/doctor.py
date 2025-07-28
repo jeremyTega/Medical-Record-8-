@@ -1,6 +1,7 @@
 from medical_application.appointment import Appointment
 from medical_application.contact import Contact
 from config.database import get_database
+#from users.clinic_admin import Admin
 
 collections = get_database()
 doctors_collection = collections["doctors"]
@@ -31,7 +32,10 @@ class Doctor:
 
     @property
     def role(self):
-        return self.role.lower()
+        return self._role.lower()
+    @role.setter
+    def role(self, value):
+        self._role = value
 
     def to_dict(self):
         return {
@@ -41,7 +45,6 @@ class Doctor:
             "_is_logged_in": self._is_logged_in,
             "role": self.role,
             "contact": {
-                "name": self.contact.name,
                 "phone_no": self.contact.phone_no,
                 "email": self.contact.email,
                 "address": {
@@ -54,5 +57,14 @@ class Doctor:
         }
 
 
-def get_appointments(self):
-    return list(appointment_collection.find({"doctors.email": self.contact.email}))
+    def get_appointments(self):
+        return list(appointment_collection.find({"doctors.email": self.contact.email}))
+
+    def approve_appointment_by_id(self, appointment_id: str, appointment_date: str):
+        from users.clinic_admin import Admin
+        return Admin.approve_appointment(self, appointment_id, appointment_date)
+
+    def add_diagnosis(self,patient_email: str, diagnosis_type: str, medication: str):
+        from users.clinic_admin import Admin
+        return Admin.add_diagnosis(self, patient_email, diagnosis_type, medication)
+

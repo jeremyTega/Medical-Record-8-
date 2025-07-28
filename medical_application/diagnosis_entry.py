@@ -34,3 +34,10 @@ class DiagnosisEntry:
         return (f'Diagnosis: {self.get_diagnosis_type()} \n'
                 f'Medication: {self.get_medication()}\n'
                 f'Date: {self.get_date()}')
+
+    def to_dict(self):
+        return {
+            "diagnosis_type": self.diagnosis_type,
+            "medication": self.medication,
+            "date": self.date.isoformat()
+        }

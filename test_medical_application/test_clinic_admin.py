@@ -2,7 +2,9 @@ import unittest
 from datetime import datetime
 from unittest.mock import patch, MagicMock
 
+from medical_application import contact
 from medical_application.appointment import Appointment
+from medical_application.doctor import Doctor
 from users.clinic_admin import Admin
 from medical_application.contact import Contact
 from medical_application.address import Address
@@ -47,6 +49,38 @@ class TestAdminCreateDoctor(unittest.TestCase):
         message = admin.login_user("patient@example.com", "mypassword")
         self.assertEqual(message, "Patient login successful")
         mock_patients.update_one.assert_called_once()
+
+    @patch("users.clinic_admin.confirmed_collection")
+    @patch("users.clinic_admin.requested_collection")
+    def test_approve_appointment_by_id_success(self, mock_requested, mock_confirmed):
+        # Arrange
+        address = Address("house_no", "street", "city", "state")
+        contact = Contact("phone", "email", address)
+        doctor = Doctor("name", "password", "specialisation", contact)
+
+        test_appointment = {
+            "appointment_id": "1234",
+            "patient_email": "patient@example.com",
+            "doctor_email": "doc@example.com",
+            "reason": "Checkup",
+            "status": "pending"
+        }
+
+        # Simulate finding the appointment in the "requested" collection
+        mock_requested.find_one.return_value = test_appointment
+
+        # Act
+        result = doctor.approve_appointment_by_id("1234", "2025-08-01 10:00 AM")
+
+
+        self.assertEqual(result["status"], "approved")
+        self.assertEqual(result["appointment_date"], "2025-08-01 10:00 AM")
+
+        mock_requested.find_one.assert_called_once_with({"appointment_id": "1234"})
+        mock_confirmed.insert_one.assert_called_once_with(test_appointment)
+        mock_requested.delete_one.assert_called_once_with({"appointment_id": "1234"})
+
+
 
     # @patch("users.clinic_admin.collections")
     # def test_book_appointment(self, mock_collections):

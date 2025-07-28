@@ -23,3 +23,11 @@ class MedicalHistory:
         raise ValueError("Entry not found")
     def get_entries(self):
         return self.entries
+
+    def add_entry(self, diagnosis_entry: DiagnosisEntry):
+        self.entries.append(diagnosis_entry)
+
+    def to_dict(self):
+        return {
+            "entries": [entry.to_dict() for entry in self.entries]
+        }
