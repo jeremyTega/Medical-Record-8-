@@ -37,7 +37,7 @@ class Admin:
         validate_non_empty("Password", password)
         validate_non_empty("Contact", my_Contact)
         validate_email_format(my_Contact.email)
-        patient = Patient(name, password,my_Contact)
+        patient = Patient(name, gender, password, my_Contact)
         result = patient_collection.insert_one(patient.to_dict())
         return patient
 
