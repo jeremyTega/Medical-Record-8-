@@ -1,9 +1,8 @@
 import unittest
 
-from medical_application.contact import Contact
 from medical_application.address import Address
 from medical_application.contact import Contact
-from medical_application.doctor import Doctor
+from medical_application.Doctor.doctor import Doctor
 
 
 class MyTestCase(unittest.TestCase):

@@ -1,6 +1,6 @@
 import unittest
 
-from medical_application.patient import Patient
+from medical_application.Patient.patient import Patient
 
 
 class MyTestCase(unittest.TestCase):

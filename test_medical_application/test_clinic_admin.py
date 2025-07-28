@@ -1,14 +1,10 @@
 import unittest
-from datetime import datetime
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
-from medical_application import contact
-from medical_application.appointment import Appointment
-from medical_application.doctor import Doctor
-from users.clinic_admin import Admin
+from medical_application.Doctor.doctor import Doctor
 from medical_application.contact import Contact
 from medical_application.address import Address
-from users.clinic_admin import Admin
+from medical_application.Admin.clinic_admin import Admin
 
 class TestAdminCreateDoctor(unittest.TestCase):
 

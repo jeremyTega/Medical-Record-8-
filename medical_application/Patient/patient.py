@@ -1,7 +1,4 @@
-from datetime import datetime, date
-
 from config.database import get_database
-from medical_application.address import Address
 from medical_application.appointment import Appointment
 from medical_application.contact import Contact
 from medical_application.medical_history import MedicalHistory
@@ -50,7 +47,7 @@ class Patient:
         self.appointments.append(appointment)
 
     def view_doctors(self):
-        from users.clinic_admin import Admin
+        from medical_application.Admin.clinic_admin import Admin
         admin = Admin("admin")
         admin.get_all_doctors()
 

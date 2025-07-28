@@ -1,7 +1,6 @@
 from config.database import get_database
 from medical_application.appointment import Appointment
 from medical_application.diagnosis_entry import DiagnosisEntry
-from medical_application.medical_history import MedicalHistory
 
 collections = get_database()
 doctors_collection = collections["doctors"]
@@ -12,8 +11,8 @@ confirmed_collection = collections["appointments"]
 records_collection = collections["records"]
 patient_collection = collections["patients"]
 
-from medical_application.doctor import Doctor
-from medical_application.patient import Patient
+from medical_application.Doctor.doctor import Doctor
+from medical_application.Patient.patient import Patient
 from validators.auth_validator import validate_non_empty, validate_email_format
 
 

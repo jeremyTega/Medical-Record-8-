@@ -61,10 +61,11 @@ class Doctor:
         return list(appointment_collection.find({"doctors.email": self.contact.email}))
 
     def approve_appointment_by_id(self, appointment_id: str, appointment_date: str):
-        from users.clinic_admin import Admin
+        from medical_application.Admin.clinic_admin import Admin
         return Admin.approve_appointment(self, appointment_id, appointment_date)
 
     def add_diagnosis(self,patient_email: str, diagnosis_type: str, medication: str):
-        from users.clinic_admin import Admin
+        from medical_application.Admin.clinic_admin import Admin
         return Admin.add_diagnosis(self, patient_email, diagnosis_type, medication)
+
 

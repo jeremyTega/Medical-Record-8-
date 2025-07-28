@@ -1,7 +1,7 @@
+from medical_application.Doctor import doctor
 from medical_application.address import Address
 from medical_application.contact import Contact
-from medical_application.doctor import Doctor
-from users.clinic_admin import Admin
+from medical_application.Admin.clinic_admin import Admin
 from config.database import get_database
 import traceback
 
@@ -14,8 +14,6 @@ appointments_collection = collections["appointments"]
 requested_collection = collections["request_appointments"]
 
 admin = Admin("admin")
-
-
 def main_menu():
     print("\n--- Welcome to the Medical App ---")
     print("1. Log in")
@@ -66,26 +64,14 @@ def doctor_menu(email):
 
         try:
             if choice == "1":
-                doc_data = doctors_collection.find_one({"contact.email": email})
-                if doc_data:
-                    addr = doc_data["contact"]["address"]
-                    address = Address(**addr)
-                    contact = Contact(
-                        phone_no=doc_data["contact"]["phone_no"],
-                        email=doc_data["contact"]["email"],
-                        address=address
-                    )
-                    doctor = Doctor(
-                        name=doc_data["name"],
-                        password=doc_data["password"],
-                        specialisation=doc_data["specialisation"],
-                        contact=contact
-                    )
-                    appointments = doctor.get_appointments()
-                    for appt in appointments:
-                        print(appt)
-                else:
-                    print("Doctor not found.")
+                print("bla")
+                # appointments = doctor.get_appointments()
+                # if appointments:
+                #         print("\n--- Your Appointments ---")
+                #         for i, appointment in enumerate(appointments, 1):
+                #             print(f"{i}. Patient: {appointment.get('patient_email')}, Reason: {appointment.get('reason')}, Date: {appointment.get('date', 'Not set')}")
+                # else:
+                # print("No appointments found.")
             elif choice == "2":
                 patient_email = input("Patient Email: ")
                 diagnosis = input("Diagnosis: ")
