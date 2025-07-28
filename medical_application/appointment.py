@@ -2,12 +2,11 @@
 from datetime import datetime
 
 class Appointment:
-    def __init__(self, patient_id: str, doctor_id: str, reason:str,status:"pending"):
+    def __init__(self, patient_id: str, doctor_id: str, reason:str):
         self.patient_id = patient_id
         self.doctor_email = doctor_id
         self.date_time = datetime.now(),
         self.reason = reason
-        self.status = status
 
     def to_dict(self):
         return {

@@ -62,4 +62,11 @@ class Admin:
         collections["appointments"].insert_one(appointment.to_dict())
         return appointment
 
+    def get_all_doctors(self):
+        doctors = doctors_collection.find({}, {
+            "name": 1,
+            "specialisation": 1,
+            "contact.email": 1
 
+        })
+        return list(doctors)
