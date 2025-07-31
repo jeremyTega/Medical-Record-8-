@@ -6,8 +6,8 @@ class Appointment:
         appointment_id = self.generate_id()
         self.patient_id = patient_id
         self.doctor_email = doctor_id
-        self.date_time = datetime.now(),
-        self.reason = reason,
+        self.date_time = datetime.now()
+        self.reason = reason
         self.status = "pending"
 
     def generate_id(self):
